@@ -1,3 +1,5 @@
+import datetime
+
 email1 = {
     "subject": "Quarterly Report",
     "from": "Alice.Cooper@Company. ",
@@ -38,28 +40,27 @@ email5 = {
 # "subject" (тема письма), "from" (адрес отправителя), "to" (адрес получателя), "body" (текст письма).
 
 email = {
-    "subject": "Hello, my friend!",
-    "from": "your_friend@gmail.com",
-    "to": "my_email@ya.ru",
-    "body": "Hi! I would like to invite you to join me for a trip to Baikal. I hope you can come!",
+    "subject": "Quarterly Report",
+    "from": "Alice.Cooper@Company. ",
+    "to": " bob_smith@Gmail.com ",
+    "body": "Hello Bob,\n\tHere is the quarterly report.\n\tPlease review and let me know your feedback.\n\nBest,\nAlice",
 }
-
 
 # 2. Добавьте дату отправки: создайте переменную send_date как текущую дату в формате YYYY-MM-DD и
 # запишите её в email["date"].https://www.w3schools.com/python/python_datetime.asp
 
 # сделала import datetime
-send_date = datetime.datetime.now()
+send_date = datetime.datetime.now().strftime("%Y-%m-%d")
 
-email["date"] = "send_date"
+email["date"] = send_date
 
 
 # 3. Нормализуйте e-mail адреса отправителя и получателя: приведите к нижнему регистру и уберите пробелы по краям.
 # Запишите обратно в email["from"] и email["to"].
 
-email1["from"] = email1["from"].lower().strip()
+email["from"] = email["from"].lower().strip()
 
-email1["to"] = email1["to"].lower().strip()
+email["to"] = email["to"].lower().strip()
 
 
 # 4.Извлеките логин и домен отправителя в две переменные login и domain.
@@ -119,33 +120,33 @@ is_corporate = domain in corporate_domains
 # 9.Соберите «чистый» текст сообщения без табов и переводов строк: замените "\t" и "\n" на пробел.
 # Сохраните в email["clean_body"].
 
-email5["clean_body"] = email5["body"].replace("\t", " ").replace("\n", " ")
+email["clean_body"] = email["body"].replace("\t", " ").replace("\n", " ")
 
 
 # 10. Сформируйте текст отправленного письма многострочной f-строкой и сохраните в email["sent_text"]:
 # Кому: {получатель}, от {отправитель} Тема: {тема письма}, дата {дата} {чистый текст сообщения}
 
-email5[
+email[
     "sent_text"
-] = f"""Кому: {email5["to"]}, 
-от {email5["from"]} 
-Тема: {email5["subject"]}, 
-дата {email5["date"]} 
-{email5["clean_body"]}"""
+] = f"""Кому: {email["to"]}, 
+от {email["from"]} 
+Тема: {email["subject"]}, 
+дата {email["date"]} 
+{email["clean_body"]}"""
 
 
 # 11. Рассчитайте количество страниц печати для email["sent_text"], если на 1 страницу помещается 500 символов.
 # Сохраните результат в переменную pages. Значение должно быть округленно в большую сторону.
 
-pages = (len(email5["sent_text"]) + 499) // 500
+pages = (len(email["sent_text"]) + 499) // 500
 
 
 # 12. Проверьте пустоту темы и тела письма: создайте переменные is_subject_empty, is_body_empty
 # в котором будет хранится что тема письма содержит данные
 
-is_subject_empty = not email5["subject"].strip()
+is_subject_empty = not email["subject"].strip()
 
-is_body_empty = not email5["body"].strip()
+is_body_empty = not email["body"].strip()
 
 
 # 13. Создайте «маску» e-mail отправителя: первые 2 символа логина + "***@" + домен.Запишите в email["masked_from"].
@@ -161,7 +162,7 @@ personal_domains.remove("bk.ru")
 
 
 # Результаты
-print(email, email1, email5)
+print(email)
 
 print(
     login,
